@@ -1,0 +1,103 @@
+package com.aclass.test.run;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Scanner;
+
+public abstract class TestRun {
+
+	public static void main(String[] args) {
+		// JDBC 맛보기 JavaDataBaseConnectivity
+		/*
+		 * 1. 디비버 실행(클라이언트 프로그램 실행)
+		 * 
+		 * 2. 접속하기 누름
+		 * 
+		 * 3. DBMS 선택
+		 * 
+		 * 4. IP주소, PORT번호, 사용자계정, 비밀번호 로 연결
+		 * 
+		 * 5. ojdbc.jar --> 등록
+		 * 
+		 * 6. 새 SQL편집기
+		 * 
+		 * 7. INSERT문 작성 => INSERT INTO 테이블명 VALUES('값', '값);
+		 * 
+		 * 8. SQL문을 실행
+		 * 
+		 * 9. UpdatedRows : 1
+		 * 
+		 * 10. COMMIT;
+		 */
+		
+		// 0) 필요한 변수 세팅
+		Connection conn = null; // 2 ~ 4 단계 담당
+		Statement stmt = null;  // 6 ~ 8 단계 담당
+		int result = 0;         // 9 번에서 반환되는 정수값 받기 담당
+		
+		// 사용자에게 값을 입력받아서 DBMS로 전달 = > 테이블에서 INSERT
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.print("번호를 입력해주세요 : ");
+		int num = sc.nextInt();
+		sc.nextLine();
+		System.out.print("이름을 입력해주세요 : ");
+		String name = sc.nextLine();
+		
+		// 실행할 SQL문(완성된 형태로 만들어주기
+		String sql = "INSERT INTO TB_STUDENT VALUES(1, '홍길동', SYSDATE)"; 
+		sql = "INSERT INTO TB_STUDENT VALUES(" + num + ", '" + name + "', SYSDATE)";
+		
+		
+		
+		try {
+			// 1) JDBC Driver 등록 -> ORACLE -> ojdbc.jar
+			// Driver 등록은 프로그램 실행 시 딱 1회만 하면 됨
+			// 프로젝트파일 우클릭 > 맨아래 proerties > ModulePath 대상잡고 add extenal > 추가할 ojtbc파일 선택
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			System.out.println("Driver 등록 성공!");
+			
+			// 2) DB서버와의 연결(IP주소, PORT번호, 사용자이름, 비밀번호)
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@115.90.212.20:10000:XE", "AJY15", "AJY151234");
+			                          // DB사 사이트에서 확인
+			System.out.println("DB서버 접속 성공!");
+			
+			conn.setAutoCommit(false); // 오토커밋 거절, 필수는 아님, 상황에 따라 사용
+			
+			// 3) 새 SQL편집기 열기
+			stmt = conn.createStatement();
+			System.out.println("Statement 객체 생성!");
+			
+			// 4) SQL문 실행
+			// UpdatedRows : N
+			// DML (INSERT, UPDATE, DELETE) => 처리된 행의 개수
+			// executeUpdate(DML문) : int
+			result = stmt.executeUpdate(sql);
+			System.out.println("SQL문 실행 성공!");
+			
+			if(result > 0) { // INSERT에 성공했을 경우 
+				conn.commit();
+			} 
+			
+			
+		} catch(ClassNotFoundException e) {
+			e.printStackTrace(); // ClassNotFoundException 이 뜬다면 59행이 문제
+			                     // 1.OJDBC를 추가 안했거나 2. "oracle.jdbc.driver.OracleDriver" 에서 오타가 났거나
+		} catch(SQLException e) {
+			e.printStackTrace(); // 사용자명/비밀번호가 부적합 > 아이디 비밀번호 잘못 입력한 것.
+			                     // 부적합한 Oracle URL이 지정되었습니다. > URL에서 오입력 있는 것
+			                     // SQLSyntaxErrorException > SQL 구문에서 문법 틀림
+			                     // NullPointerException > 다양한 변수가 존재 JDBC 객체들 제대로 대입했는지 확인하기
+		} finally {
+			try {
+				stmt.close();
+				conn.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+}
