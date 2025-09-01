@@ -40,7 +40,7 @@ public class SelectRun {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			
-			conn = 
+			
 			
 			
 			
