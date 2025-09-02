@@ -3,6 +3,7 @@ package com.kh.statement.controller;
 import java.util.List;
 
 import com.kh.statement.model.dao.MemberDao;
+import com.kh.statement.model.dto.PasswordDTO;
 import com.kh.statement.model.vo.Member;
 
 /**
@@ -72,6 +73,32 @@ public class MemberController {
 		
 	}
 	
+	public int update(String userId, String userPwd, String newPwd) {
+		
+		// 1. 데이터 가공
+		// DTO에 새로운 값들을 담아주자
+		PasswordDTO pd = new PasswordDTO(userId, userPwd, newPwd);
+		
+		// 2. 요청처리
+		// 아이디랑 비밀번호, 바꿀 비밀번호 줄테니까 새 비밀번호로 바꿔줘
+		int result = new MemberDao().update(pd);
+		
+		return result; // View로 int값 반환
+	}
+	
+	
+	public int delete(String userId, String userPwd) {
+		// 1. 데이터 가공
+		Member member = new Member();
+		member.setUserId(userId);
+		member.setUserPwd(userPwd);
+		
+		// 2. 요청처리
+		int result = new MemberDao().delete(member);
+		
+		// 3. 결과반환
+		return result;
+	}
 	
 	
 	

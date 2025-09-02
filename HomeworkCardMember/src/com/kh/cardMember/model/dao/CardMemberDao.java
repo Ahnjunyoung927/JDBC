@@ -14,14 +14,14 @@ public class CardMemberDao {
 		
 		String sql = "INSET "
 				    + "INTO "
-		                  + "SEQ_MEMBER_NO.NEXTVAL"
+		                  + "SEQ_MEMBER_NO.NEXTVAL";
 				          
 		
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			
-		} catch() {
-			
+		} catch(ClassNotFoundException e) {
+			e.printStackTrace();
 		}
 		
 		

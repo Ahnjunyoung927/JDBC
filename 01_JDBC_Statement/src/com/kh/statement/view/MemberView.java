@@ -25,6 +25,17 @@ public class MemberView {
 	 * 프로그램 구동 시 사용자에게 메인화면을 출력해주는 메소드입니다.
 	 */
 	public void mainMenu() {
+		/* 
+		 * 2025 / 09 / 01 오늘의 실습 겸 숙제
+		 * 
+		 * 금요일 숙제 3번 --> 나만의 테이블 만들기
+		 * 
+		 * 나만의 테이블에 INSERT
+		 * 전체조회
+		 * 유니크 제약조건 걸려있는 컬럼으로 조회
+		 * LIKE 키워드써서 조회하는거
+		 * 
+		 */
 		while(true) {
 			System.out.println(" ---- 회원 관리 프로그램 ---- ");
 			System.out.println("1. 회원 추가");
@@ -43,8 +54,8 @@ public class MemberView {
 			case 2 : findAll(); break;
 			case 3 : findById(); break;
 			case 4 : findByKeyword(); break;
-			case 5 : break;
-			case 6 : break;
+			case 5 : update(); break;
+			case 6 : delete(); break;
 			case 9 : System.out.println("프로그램을 종료합니다."); return;
 			default : System.out.println("잘못된 메뉴 선택입니다.");
 			}
@@ -165,8 +176,41 @@ public class MemberView {
 		}
 	}
 	
+	private void update() {
+		System.out.println();
+		System.out.println("회원 정보 수정 서비스입니다.");
+		System.out.print("아이디를 입력해주세요 : ");
+		String userId = sc.nextLine();
+		System.out.print("비밀번호를 입력해주세요 : ");
+		String userPwd = sc.nextLine();
+		System.out.print("새 비밀번호를 입력해주세요 : ");
+		String newPwd = sc.nextLine();
+		
+		int result = mc.update(userId, userPwd, newPwd);
+		
+		if(result > 0) {
+			System.out.println("비밀번호 변경에 성공했습니다.");
+		} else {
+			System.out.println("아이디나 비밀번호가 일치가 하지 않습니다.");
+		}
+	}
 	
-	
+	public void delete() {
+		System.out.println("\n회원정보 삭제 서비스입니다.");
+		System.out.println("삭제할 회원의 정보를 입력해주세요");
+		System.out.print("아이디 : ");
+		String userId = sc.nextLine();
+		System.out.print("비밀번호 : ");
+		String userPwd = sc.nextLine();
+		
+		int result = mc.delete(userId, userPwd);
+		
+		if(result > 0) {
+			System.out.println("회원정보 삭제에 성공했습니다.");
+		} else {
+			System.out.println("회원정보 삭제에 실패했습니다. 아이디나 비밀번호를 재확인 해주세요.");
+		}
+	}
 	
 	
 }
