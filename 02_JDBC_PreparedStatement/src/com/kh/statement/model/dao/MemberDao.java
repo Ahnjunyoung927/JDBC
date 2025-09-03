@@ -457,7 +457,7 @@ public class MemberDao {
 		// update할 일 : 전달받은 값을 가지고 값이 존재하는 행을 찾아서 정보를 갱신해줌
 		// 얘가 맡은 일 : SQL문 실행하고 결과 받아오기
 		
-		// 0) 
+		// 0)
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -474,17 +474,17 @@ public class MemberDao {
 					 """;
 		
 		try {
-			// 1
+			// 1)
 			Class.forName(DRIVER);
-			
+			// 2)
 			conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 			conn.setAutoCommit(false);
-			
+			// 3)
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, pd.getNewPwd());
 			pstmt.setString(2, pd.getUserId());
 			pstmt.setString(3, pd.getUserPwd());
-			
+			// 4, 5)
 			result = pstmt.executeUpdate();
 			
 			if(result > 0) {
@@ -496,6 +496,7 @@ public class MemberDao {
 		} catch(SQLException e) {
 			e.printStackTrace();
 		} finally {
+			// 7)
 			try {
 				if(pstmt != null) {
 					pstmt.close();
@@ -511,6 +512,7 @@ public class MemberDao {
 				e.printStackTrace();
 			}
 		}
+		// 8)
 		return result;
 	}
 	
@@ -567,7 +569,5 @@ public class MemberDao {
 		}
 		return result;
 	}
-	
-	
 	
 }

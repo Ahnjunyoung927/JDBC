@@ -137,7 +137,7 @@ public class CardMemberDao {
 		return cardMembers;
 	}
 	
-	public CardMember findByResidentNo() {
+	public CardMember findByResidentNo(String residentNo) {
 		CardMember cardMember = new CardMember();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
