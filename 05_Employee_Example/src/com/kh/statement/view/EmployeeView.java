@@ -37,6 +37,7 @@ public class EmployeeView {
 				selectByJob();
 				break;
 			case 4:
+				selectByEmpId();
 				break;
 			case 5:
 				break;
@@ -103,8 +104,38 @@ public class EmployeeView {
 			System.out.println(
 					"==========================================================================================================");
 			System.out.println();
+		}
 	}
 	
+	private void selectById() {
+		System.out.println();
+		System.out.println("============================================< 개별 사원 조회 >=============================================");
+		System.out.print("조회할 사원의 사원번호를 입력해주세요 : ");
+		String empId = sc.nextLine();
+		
+		Employee employee = ec.selectById(empId);
+		
+		if(employee != null) {
+			System.out.println("사원번호 : " + );
+		} else {
+			System.out.println("입력하신 사원번호에 해당하는 사원이 없습니다.");
+		}
+		
+		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
