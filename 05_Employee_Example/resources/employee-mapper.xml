@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>EMPLOYEE SQL</comment>
+
+
+	<entry key="A">B</entry>
+
+	<entry key="selectAll">
+	SELECT
+	       EMP_ID
+	     , EMP_NAME
+	     , SALARY
+	     , DEPT_TITLE
+	     , JOB_NAME
+	  FROM
+	       EMPLOYEE
+	  LEFT
+	  JOIN
+	       JOB USING (JOB_CODE)
+	  LEFT
+      JOIN
+           DEPARTMENT ON (DEPT_CODE = DEPT_ID)
+     ORDER
+        BY
+           EMP_ID
+	</entry>
+	
+
+	<entry key="selectByDept">
+	SELECT
+	       EMP_ID
+	     , EMP_NAME
+	     , SALARY
+	     , DEPT_TITLE
+	     , JOB_NAME
+	  FROM
+	       EMPLOYEE
+	  LEFT     
+	  JOIN
+	       JOB USING (JOB_CODE)
+	  LEFT 
+      JOIN
+           DEPARTMENT ON (DEPT_CODE = DEPT_ID)
+     WHERE
+           DEPT_TITLE = ?
+     ORDER
+        BY
+           EMP_ID
+	</entry>
+	
+
+	<entry key="selectByJob">
+	SELECT
+	       EMP_ID
+	     , EMP_NAME
+	     , SALARY
+	     , DEPT_TITLE
+	     , JOB_NAME
+	  FROM
+	       EMPLOYEE
+	  LEFT     
+	  JOIN
+	       JOB USING (JOB_CODE)
+	  LEFT
+      JOIN
+           DEPARTMENT ON (DEPT_CODE = DEPT_ID)
+     WHERE
+           JOB_NAME = ?
+     ORDER
+        BY
+           EMP_ID
+	</entry>
+	
+
+	<entry key="selectByEmpNo">
+	 SELECT
+	        EMP_ID
+	      , EMP_NAME
+	      , EMP_NO
+	      , EMAIL
+	      , PHONE
+	      , DEPT_CODE
+	      , JOB_CODE
+	      , SAL_LEVEL
+	      , SALARY
+	      , BONUS
+	      , MANAGER_ID
+	      , HIRE_DATE
+	      , ENT_DATE
+	      , ENT_Y/N
+	   FROM
+			EMPLOYEE
+      WHERE
+            EMP_ID = ?
+	</entry>
+	
+
+	<entry key="selectByHighSalary">
+	SELECT
+	       EMP_ID
+	     , EMP_NAME
+	     , SALARY
+	     , DEPT_TITLE
+	     , JOB_NAME
+	  FROM
+	       EMPOYEE
+	 ORDER
+	    BY
+	       SALARY DESC NULLS LAST
+    OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY
+	</entry>
+	
+
+	<entry key="selectByLowSalary">
+	SELECT
+	       EMP_ID
+	     , EMP_NAME
+	     , SALARY
+	     , DEPT_TITLE
+	     , JOB_NAME
+	  FROM
+	       EMPOYEE
+	 ORDER
+	    BY
+	       SALARY ASC NULLS LAST
+    OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY
+	</entry>
+	
+
+	<entry key="insertEmployee">
+	INSERT
+	  INTO
+	       EMPLOYEE
+	VALUES
+	        (
+	        SEQ_EMPNO
+	      , ?
+	      , ?
+	      , ?
+	      , ?
+	      , ?
+	      , ?
+	      , ?
+	      , ?
+	      , ?
+	      , ?
+	      , ?
+	      , ?
+	      , N
+	        )
+	</entry>
+
+
+	<entry key="updateEmployee">
+	UPDATE
+	       EMPLOYEE
+	   SET
+	       SALARY = ?
+	     , JOB_CODE = ?
+	     , DEPT_CODE = ?
+	 WHERE
+	       EMP_NO = ?
+	</entry>
+	
+	
+	<entry key="deleteEmployee">
+		 UPATE
+		       EMPLOYEE
+		   SET
+		       ENT_YN = ?
+		     , ENT_DATE = ?
+		 WHERE
+		       EMP_NO = ?
+	</entry>
+	
+</properties>
+
+
+
+
+
+
+
+
+
+

@@ -12,7 +12,8 @@ public class CardMemberController {
 		
 		CardMember cardMember = new CardMember(name, residentNo, phone, grade);
 		
-		int result = new CardMemberService().insertCardMember(cardMember);
+		int result = 0;
+		// int result = new CardMemberService().insertCardMember(cardMember);
 		
 		return result;
 	}
